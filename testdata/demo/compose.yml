@@ -1,0 +1,24 @@
+x-common-env: &common
+  PORT: 8080
+  SMTP_HOST: smtp.mailgun.org
+
+services:
+  api:
+    image: ghcr.io/acme/api:1.42
+    environment:
+      - APP_ENV=Staging
+      - PORT=8080
+      - LOG_LEVEL="info"
+      - DATABASE_URL=postgres://app:s3cr3t@db:5432/app
+      - "REDIS_URL=redis://cache.staging.internal:6379/0 "
+      - STRIPE_SECRET_KEY=sk_test_51NcY8yLkq2Zx
+      - JWT_SECRET=9f2c41e7a8b3d6c0
+      - SMTP_HOST=smtp.mailgun.org
+      - FEATURE_FLAGS=search,billing
+      - S3_BUCKET=acme-staging-uploads
+  worker:
+    image: ghcr.io/acme/worker:1.42
+    environment:
+      <<: *common
+      QUEUE: default
+      LOG_LEVEL:

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>envdiff</title>
+<link rel="icon" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<main class="sheet">
+  <header class="mast">
+    <div class="mast-title">
+      <svg class="reg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="6"/><path d="M12 1v22M1 12h22"/></svg>
+      <h1>envdiff</h1>
+      <p class="lede">A proof of your environment, key by key.</p>
+    </div>
+    <dl class="slug">
+      <div><dt>Proof</dt><dd id="proof-date">—</dd></div>
+      <div><dt>Sources</dt><dd id="proof-sources">0</dd></div>
+      <div><dt>Keys</dt><dd id="proof-keys">0</dd></div>
+      <div class="bar" aria-hidden="true"><i class="sw-paper"></i><i class="sw-amber"></i><i class="sw-teal"></i><i class="sw-dim"></i><i class="sw-ink"></i></div>
+    </dl>
+  </header>
+
+  <section class="galley" aria-label="Sources">
+    <ol id="slips" class="slips"></ol>
+    <form id="paste" class="paste" hidden>
+      <label>Name <input id="paste-name" placeholder=".env.production or compose.yml#api" spellcheck="false" autocomplete="off"></label>
+      <textarea id="paste-text" rows="8" spellcheck="false" placeholder="KEY=value, a ConfigMap or Secret, or a compose.yml"></textarea>
+      <div class="paste-actions">
+        <button type="submit" class="ink">Set in proof</button>
+        <button type="button" id="paste-cancel">Cancel</button>
+        <label class="file">or choose files<input id="file" type="file" multiple></label>
+      </div>
+    </form>
+    <p id="error" class="error" role="alert" hidden></p>
+  </section>
+
+  <nav class="bar-filters" aria-label="Filter keys">
+    <div id="filters" class="filters" role="tablist"></div>
+    <div class="toggles">
+      <label class="switch"><input type="checkbox" id="keys-only"><span>keys only</span></label>
+      <label class="switch"><input type="checkbox" id="reveal"><span>show values</span></label>
+    </div>
+  </nav>
+
+  <div class="table-wrap">
+    <table id="proof" class="proof">
+      <thead><tr id="head"></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div id="empty" class="empty" hidden>
+      <p class="empty-mark">^</p>
+      <p><strong>Drop two or more files anywhere on this sheet.</strong></p>
+      <p>.env files, Kubernetes ConfigMaps and Secrets, and docker compose files. Nothing leaves this machine.</p>
+    </div>
+  </div>
+
+  <footer class="colophon">
+    <span><b class="m-near">≈</b> near-miss</span>
+    <span><b class="m-differs">≠</b> differs</span>
+    <span><b class="m-missing">^</b> missing</span>
+    <span><b class="m-extra">+</b> extra</span>
+    <span class="tells">tells: <b>·</b> space <b>↵</b> newline <b>→</b> tab</span>
+    <span class="spacer"></span>
+    <span>the first source is the reference</span>
+  </footer>
+</main>
+<div id="drop" class="drop" hidden><p>Drop to set in proof</p></div>
+</body>
+</html>
